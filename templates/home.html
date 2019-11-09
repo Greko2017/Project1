@@ -1,0 +1,163 @@
+
+{% extends 'main_base.html' %}
+
+{% block title %}My Book Review App{% endblock %}
+
+
+{% block body %}
+
+<h1 class="mt-5">Welcome to Book Review </h1>
+<p class="lead">You are at the right place to make review on books and search for one.</p>
+<p>Thank to <a href="https://www.goodreads.com">GoodReads</a> for providing great content.</p>
+<hr>
+
+ {% if isbn_number %}
+<p class="lead"><strong>{{isbn_number+title_number+author_number}}</strong> result found for <strong>{{query}}</strong></p>
+{% endif %}
+
+
+<div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">ISBN <span class="badge badge-primary">{{isbn_number}}</span></a>
+        <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">TITLE <span class="badge badge-primary">{{title_number}}</span></a>
+        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">AUTHOR <span class="badge badge-primary">{{author_number}}</span></a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    
+            <div class="card mb-3">
+                <div class="row no-gutters">
+                  
+                    <div class="card-body">
+                            <p class="mt-0 mb-1 lead">TITLE Books Found</p>
+                            
+                            <hr>
+                            <div class="row ">
+                                {% if title_books %}
+                                    {% for book in title_books %}
+                                        <div class="col-md-4">
+                                            
+                                                <div class="card mb-4 shadow-sm">
+                                                    <div class="card-header">
+                                                        <h6 class="my-0 font-weight-normal">{{book.title}}</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul class="list-unstyled mt-3 mb-4">
+                                                            <li>ISBN : {{book.isbn}}</li>
+                                                            <li>Author :{{book.author}}</li>
+                                                            <li class="text-muted">-Year : {{book.year}} </li>
+                                                        </ul>
+                                                        <a href="{{ url_for('book_details',book_id=book.id) }}"><button type="button" class="btn btn-lg btn-block btn-dark">View
+                                                            details &raquo;</button></a>
+                                                    </div>
+                                                </div>
+
+                                        </div>
+                                    {% else %}
+                                        <h6>Sorry ! No Books found</h6>
+                                    {% endfor %}
+                                {% else %}
+                                    <h6>Use the nav bar search engine to look for a book.</h6>
+                                {% endif %}
+                            </div>
+
+                    </div>
+                </div>
+                
+            </div>          
+              
+        </div>
+        <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+            <div class="card mb-3">
+                <div class="row no-gutters">
+                  
+                    <div class="card-body">
+                            <p class="mt-0 mb-1 lead">ISBN Books Found</p>
+                            
+                            <hr>
+                            <div class="row ">
+                                {% if isbn_books %}
+                                    {% for book in isbn_books %}
+                                        <div class="col-md-4">
+                                                <div class="card mb-4 shadow-sm">
+                                                    <div class="card-header">
+                                                        <h6 class="my-0 font-weight-normal">{{book.title}}</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul class="list-unstyled mt-3 mb-4">
+                                                            <li>ISBN : {{book.isbn}}</li>
+                                                            <li>Author :{{book.author}}</li>
+                                                            <li class="text-muted">-Year : {{book.year}} </li>
+                                                        </ul>
+                                                        <a href="{{ url_for('book_details',book_id=book.id) }}"><button type="button" class="btn btn-lg btn-block btn-dark">View
+                                                            details &raquo;</button></a>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    {% else %}
+                                        <h6>Sorry ! No Books found</h6>
+                                    {% endfor %}
+                                {% else %}
+                                    <h6>Use the nav bar search engine to look for a book.</h6>
+                                {% endif %}
+                            </div>
+
+                    </div>
+                </div>
+                
+            </div>
+              
+        </div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    
+            <div class="card mb-3">
+                <div class="row no-gutters">
+                  
+                    <div class="card-body">
+                            <p class="mt-0 mb-1 lead">AUTHOR Books Found</p>
+                            
+                            <hr>
+                            <div class="row ">
+                                {% if author_books %}
+                                    {% for book in author_books %}
+                                        <div class="col-md-4">
+                                            <div class="card mb-4 shadow-sm">
+                                                <div class="card-header">
+                                                    <h6 class="my-0 font-weight-normal">{{book.title}}</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <ul class="list-unstyled mt-3 mb-4">
+                                                        <li>ISBN : {{book.isbn}}</li>
+                                                        <li>Author :{{book.author}}</li>
+                                                        <li class="text-muted">-Year : {{book.year}} </li>
+                                                    </ul>
+                                                    <a href="{{ url_for('book_details',book_id=book.id) }}"><button type="button" class="btn btn-lg btn-block btn-dark">View
+                                                        details &raquo;</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <h6>Sorry ! No Books found</h6>
+                                    {% endfor %}
+                                {% else %}
+                                    <h6>Use the nav bar search engine to look for a book.</h6>
+                                {% endif %}
+                            </div>
+
+                    </div>
+                </div>
+                
+            </div>
+                              
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+
+{% endblock %}

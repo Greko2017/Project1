@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+  
+  {% block header %}{% endblock %}
+
+
+    <title>{% block title %}Book App{% endblock %}</title>
+</head>
+<body>
+    <div class="container">
+        {% if message %}
+            <div class="alert alert-{{message.type}} alert-{{message.type}} fade show" role="alert">
+                {{message.value}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+        {% block body %}
+            <h1>Test !!</h1>
+        {% endblock %}
+    </div>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+</body>
+</html>

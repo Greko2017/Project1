@@ -1,0 +1,81 @@
+{% extends 'main_base.html' %}
+
+{% block title %}My Book Review App{% endblock %}
+
+
+{% block body %}
+<br>
+<p><strong>TITE : </strong> {{book.title}}</p>
+<p><strong>ISBN : </strong> {{book.isbn}}</p>
+
+<div class="d-flex justify-content-between align-items-center">
+    <p><strong>Author :</strong> {{book.author}}</p>
+    {% if result_api %}
+    <span >Goodreads work ratings count : <a href="#" class="badge badge-primary">{{result_api.work_ratings_count}}</a></span>
+    {% else %}
+        <a class="badge badge-primary" href="#">not available</a>
+    {% endif %}
+</div>
+<div class="d-flex justify-content-between align-items-center">
+        <strong class="text-gray-dark text-muted">-Year : {{book.year}}</strong>
+        {% if result_api %}
+        <span >Goodreads average rating review : <a href="#" class="badge badge-primary">{{result_api.average_rating}}</a></span>
+        {% else %}
+        <span >BookReview average rating review : <a href="#" class="badge badge-primary">{{avg_book_review}}</a></span>
+        {% endif %}
+    </div>
+    
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Review(s)</h6>
+        {% for review in reviews %}
+        <div class="media text-muted pt-3">
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">@{{"username"}}</strong>
+            {{review.text}}
+        </p>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <strong class="text-gray-dark"></strong>
+            <a class="badge badge-primary" href="#">{{review.rating}}</a>
+        </div>
+        </div>
+    {% else %}
+    <p>Be the first to review this book!</p>
+    {% endfor %}
+</div>
+
+<div class="reviews">
+    <form action="{{ url_for('book_details',book_id=book.id) }}" method="post">
+        <div class="form-group">
+            <label for="review">Review:</label>
+            <textarea name="text" class="form-control" rows="4" id="review"></textarea>
+        </div>
+        <input type="hidden" name="book_id" value={{book.id}}>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio1" value="1">
+            <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio2" value="2">
+            <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="3">
+            <label class="form-check-label" for="inlineRadio3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio4" value="4">
+            <label class="form-check-label" for="inlineRadio4">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="rating" id="inlineRadio5" value="5">
+            <label class="form-check-label" for="inlineRadio5">5</label>
+        </div>
+        <br><br>
+        <button type="submit" class="btn btn-primary">Review</button>
+        </form>
+    </form>
+</div>
+<br><br>
+</div>
+{% endblock %}
